@@ -8,7 +8,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: transparent;
     margin: 0;
     padding: 0;
     color: #333;
@@ -277,14 +277,16 @@ p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 25px; }
     color: #007bff;
 }
 
-/* --- 粒子背景特效样式 --- */
+/* --- 粒子背景特效样式 (修正版) --- */
 #bg-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* 关键：放在最底层，不会挡住按钮 */
-    pointer-events: none; /* 让鼠标点击穿透画布，不影响网页操作 */
+    z-index: -1; 
+    pointer-events: none;
+    background-color: #f0f2f5; /* 把原来的背景色移到这里！ */
 }
+
 
