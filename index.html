@@ -9,70 +9,63 @@
     <script src="lang.js"></script> 
 
     <style>
-        /* 1. 强制 Body 背景纯白 */
-        body { 
-            background-color: #ffffff !important; 
-            overflow-x: hidden; /* 防止水平滚动条 */
-        }
-
-        /* 2. 修复卡片被切断的核心代码 */
-        /* 给所有父容器开启溢出显示，严禁裁剪 */
-        .main-container, .quiz-list {
-            overflow: visible !important;
-            transform-style: preserve-3d !important;
-        }
-
-        /* 3. 给列表项加"保护垫"，防止卡片变大时撞墙 */
-        ul.quiz-list li {
-            display: block !important;
-            padding: 10px !important;  /* 关键：四周留出10px空隙给阴影 */
-            margin: -10px !important;  /* 修正padding带来的位移 */
-            margin-bottom: 15px !important; /* 保持垂直间距 */
-            overflow: visible !important;   /* 关键：允许内容超出 */
-            position: relative !important;
-            z-index: 1 !important;
-        }
-
-        /* 4. 卡片本体样式 */
-        .quiz-link {
-            display: block !important;
-            position: relative !important;
-            background: #fff !important;
-            border: 1px solid #eee !important;
-            border-radius: 12px !important;
-            z-index: 10 !important;
-            /* 启用硬件加速，防止渲染抖动 */
-            transform: translate3d(0,0,0) !important;
-            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-            /* 确保背景色不透明 */
-            background-clip: padding-box !important;
-        }
-
-        /* 5. 鼠标悬停特效 (绿色边框 + 完整显示) */
-        .quiz-link:hover {
-            /* 🟢 苹果绿边框 */
-            border-color: #34C759 !important;
-            
-            /* 🟢 稍微上浮 (带3D位移，防止被背景吞没) */
-            transform: translateY(-5px) scale(1.02) translate3d(0,0,20px) !important;
-            
-            /* 🟢 绿色光晕阴影 */
-            box-shadow: 0 10px 25px rgba(52, 199, 89, 0.3) !important;
-            
-            /* 🟢 层级设为最高，直接刺破所有遮挡 */
-            z-index: 999999 !important;
-        }
-
-        /* 6. 粒子背景层 (悬浮在最上层但鼠标穿透) */
+        /* 1. 粒子特效层：强制沉底 */
         #particles-js {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 999; /* 浮在内容上面 */
-            pointer-events: none; /* 鼠标穿透，不挡点击 */
-            background: transparent !important;
+            z-index: -1 !important; /* 关键：放到最最底下，绝不挡卡片 */
+            background-color: #f7f9fc !important; /* 浅淡背景色 */
+        }
+        
+        /* 2. 网页主体：透明，为了漏出底下的粒子 */
+        body { 
+            background-color: transparent !important; 
+        }
+
+        /* 3. 防止方框被切断的核心修复 */
+        .main-container, .quiz-list {
+            overflow: visible !important; /* 严禁裁剪 */
+            transform-style: preserve-3d !important;
+        }
+
+        /* 4. 给列表项加"保护垫"，防止阴影被切 */
+        ul.quiz-list li {
+            display: block !important;
+            padding: 10px !important;  /* 留出空隙给变大的框 */
+            margin: -10px !important;  /* 修正位置 */
+            margin-bottom: 15px !important;
+            overflow: visible !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* 5. 卡片样式：白色背景，盖住底下的粒子 */
+        .quiz-link {
+            display: block !important;
+            position: relative !important;
+            background: #fff !important; /* 必须是白色，不然字看不清 */
+            border: 1px solid #eee !important;
+            border-radius: 12px !important;
+            transition: all 0.2s ease-in-out !important;
+            z-index: 10 !important;
+        }
+
+        /* 6. 鼠标悬停：变回蓝色 + 完整显示 */
+        .quiz-link:hover {
+            /* 🔵 改回你想要的蓝色 */
+            border-color: #007bff !important; 
+            
+            /* 上浮效果 */
+            transform: translateY(-5px) scale(1.02) !important;
+            
+            /* 蓝色阴影 */
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.15) !important;
+            
+            /* 层级拉到最高，防止被上下卡片遮挡 */
+            z-index: 9999 !important; 
         }
     </style>
 </head>
@@ -107,41 +100,27 @@
     </footer>
 
     <div id="particles-js"></div>
-
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
     <script>
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 30, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#4cd964" }, /* 🟢 苹果绿粒子 */
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#66cc99" }, /* 绿色粒子 */
                 "shape": { "type": "circle" },
-                "opacity": {
-                    "value": 0.6,
-                    "random": true,
-                    "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.3, "sync": false }
-                },
-                "size": { "value": 6, "random": true },
-                "line_linked": { "enable": false }, /* ❌ 关闭连线，防止变成蜘蛛网 */
-                "move": {
-                    "enable": true,
-                    "speed": 1,
-                    "direction": "top", /* 向上飘动 */
-                    "random": true,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false
-                }
+                "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.3 } },
+                "size": { "value": 5, "random": true },
+                "line_linked": { "enable": false }, /* 无连线 */
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
             },
             "interactivity": {
-                "detect_on": "window",
+                "detect_on": "window", /* 必须是 window 才能全屏检测 */
                 "events": {
                     "onhover": { "enable": true, "mode": "bubble" },
                     "onclick": { "enable": false },
                     "resize": true
                 },
                 "modes": {
-                    "bubble": { "distance": 200, "size": 10, "duration": 2, "opacity": 0.8 }
+                    "bubble": { "distance": 200, "size": 8, "duration": 2, "opacity": 0.8 }
                 }
             },
             "retina_detect": true
