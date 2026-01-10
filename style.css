@@ -278,15 +278,14 @@ p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 25px; }
 }
 
 /* --- 粒子背景特效样式 (修正版) --- */
-#bg-canvas {
+#particles-js {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; 
-    pointer-events: none;
-    background-color: #f0f2f5; /* 把原来的背景色移到这里！ */
+    z-index: -10; /* 最底层 */
+    background-color: #f0f2f5; /* 背景底色在这里定义 */
+    background-image: url(''); /* 确保没有图片干扰 */
 }
-
 
