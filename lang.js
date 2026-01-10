@@ -22,7 +22,7 @@ const languageNames = {
 const uiTranslations = {
     // --- 英语 (English) ---
     "en": {
-        "site_title": "Mind Lab",
+        "site_title": "💡Mind Lab",
         "home_nav": "Home",
         "exit_nav": "Exit Quiz",
         "list_title": "✨Hot Quizzes✨",
@@ -48,7 +48,7 @@ const uiTranslations = {
 
     // --- 简体中文 ---
     "zh": {
-        "site_title": "心灵实验室 Global",
+        "site_title": "💡心灵实验室 Global",
         "home_nav": "首页",
         "exit_nav": "退出测试",
         "list_title": "✨热门测试列表✨",
@@ -73,7 +73,7 @@ const uiTranslations = {
 
     // --- 德语 (Deutsch) ---
     "de": {
-        "site_title": "Mind Lab Global",
+        "site_title": "💡Mind Lab Global",
         "home_nav": "Startseite",
         "exit_nav": "Beenden",
         "list_title": "✨Beliebte Tests✨",
@@ -98,7 +98,7 @@ const uiTranslations = {
 
     // --- 日语 (Japanese) ---
     "ja": {
-        "site_title": "マインドラボ Global",
+        "site_title": "💡マインドラボ Global",
         "home_nav": "ホーム",
         "exit_nav": "終了",
         "list_title": "✨人気診断✨",
@@ -123,7 +123,7 @@ const uiTranslations = {
 
     // --- 法语 (French) ---
     "fr": {
-        "site_title": "Labo Esprit Global",
+        "site_title": "💡Labo Esprit Global",
         "home_nav": "Accueil",
         "exit_nav": "Quitter",
         "list_title": "✨Tests Populaires✨",
@@ -148,7 +148,7 @@ const uiTranslations = {
 
     // --- 西班牙语 (Spanish) ---
     "es": {
-        "site_title": "Lab Mental Global",
+        "site_title": "💡Lab Mental Global",
         "home_nav": "Inicio",
         "exit_nav": "Salir",
         "list_title": "✨Tests Populares✨",
@@ -173,7 +173,7 @@ const uiTranslations = {
 
     // --- 葡萄牙语 (Portuguese) ---
     "pt": {
-        "site_title": "Lab da Mente Global",
+        "site_title": "💡Lab da Mente Global",
         "home_nav": "Início",
         "exit_nav": "Sair",
         "list_title": "✨Testes Populares✨",
@@ -198,7 +198,7 @@ const uiTranslations = {
 
     // --- 俄语 (Russian) ---
     "ru": {
-        "site_title": "Mind Lab Global",
+        "site_title": "💡Mind Lab Global",
         "home_nav": "Главная",
         "exit_nav": "Выход",
         "list_title": "✨Популярные тесты✨",
@@ -223,7 +223,7 @@ const uiTranslations = {
 
     // --- 韩语 (Korean) ---
     "ko": {
-        "site_title": "마인드 랩 Global",
+        "site_title": "💡마인드 랩 Global",
         "home_nav": "홈",
         "exit_nav": "나가기",
         "list_title": "✨인기 테스트✨",
@@ -248,7 +248,7 @@ const uiTranslations = {
 
     // --- 阿拉伯语 (Arabic) ---
     "ar": {
-        "site_title": "مختبر العقل",
+        "site_title": "💡مختبر العقل",
         "home_nav": "الرئيسية",
         "exit_nav": "خروج",
         "list_title": "✨الاختبارات الشائعة✨",
@@ -273,7 +273,7 @@ const uiTranslations = {
 
     // --- 越南语 (Vietnamese) ---
     "vi": {
-        "site_title": "Mind Lab Global",
+        "site_title": "💡Mind Lab Global",
         "home_nav": "Trang chủ",
         "exit_nav": "Thoát",
         "list_title": "✨Bài kiểm tra phổ biến✨",
@@ -298,7 +298,7 @@ const uiTranslations = {
 
     // --- 泰语 (Thai) ---
     "th": {
-        "site_title": "Mind Lab Global",
+        "site_title": "💡Mind Lab Global",
         "home_nav": "หน้าแรก",
         "exit_nav": "ออก",
         "list_title": "✨แบบทดสอบยอดนิยม✨",
@@ -323,7 +323,7 @@ const uiTranslations = {
 
     // --- 印尼语 (Indonesian) ---
     "id": {
-        "site_title": "Mind Lab Global",
+        "site_title": "💡Mind Lab Global",
         "home_nav": "Beranda",
         "exit_nav": "Keluar",
         "list_title": "✨Kuis Populer✨",
@@ -345,5 +345,4 @@ const uiTranslations = {
         "alert_terms": "Hasil hanya untuk referensi.",
         "alert_contact": "Email: lifei444208421@gmail.com"
     }
-
 };

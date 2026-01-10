@@ -37,45 +37,8 @@
             <a href="javascript:void(0);" id="link-contact" data-i18n="contact">Contact Us</a>
         </div>
     </footer>
-<div id="particles-js"></div>
 
     <script src="script.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-    <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#333333" }, /* 🟢 改成深灰色，不再是看不见的浅灰 */
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.8, "random": false }, /* 🟢 提高不透明度 */
-                "size": { "value": 4, "random": true },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#333333",          /* 🟢 连线也改成深灰 */
-                    "opacity": 0.5,              /* 🟢 线条更明显 */
-                    "width": 1.5
-                },
-                "move": { "enable": true, "speed": 3, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-            },
-            "interactivity": {
-                "detect_on": "window",           /* 🟢 扩大鼠标检测范围 */
-                "events": {
-                    "onhover": { "enable": true, "mode": "grab" }, /* 鼠标放上去吸附 */
-                    "onclick": { "enable": true, "mode": "push" }, /* 点击散开 */
-                    "resize": true
-                },
-                "modes": {
-                    "grab": { "distance": 200, "line_linked": { "opacity": 1 } } /* 抓取范围变大 */
-                }
-            },
-            "retina_detect": true
-        });
-    </script>
+<script src="particles.js"></script>
 </body>
 </html>
-
-
-

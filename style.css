@@ -8,7 +8,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: transparent;
+    background-color: #f0f2f5;
     margin: 0;
     padding: 0;
     color: #333;
@@ -76,19 +76,18 @@ body {
 
 /* 3. 主内容容器 (响应式核心) */
 .main-container {
-    position: relative; /* 关键 */
-    z-index: 10;        /* 保证在背景之上 */
-    
-    /* 保持你原来的样式 */
     background-color: #ffffff;
-    width: 95%;
-    max-width: 640px;
-    margin: 30px auto;
-    padding: 25px;
-    border-radius: 12px;
+    
+    /* 【适配核心】 */
+    width: 95%;           /* 手机上占95%宽度，两边留一点缝隙 */
+    max-width: 640px;     /* 电脑/平板上最大只要640px，防止太宽难看 */
+    margin: 30px auto;    /* 【关键】上下30px间距，左右自动居中(auto) */
+    
+    padding: 25px;        /* 内边距 */
+    border-radius: 12px;  /* 圆角 */
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     text-align: center;
-    min-height: 400px;
+    min-height: 400px;    /* 保证卡片有个最小高度，不会看起来太瘪 */
 }
 
 /* 4. 标题与文字优化 */
@@ -277,14 +276,15 @@ p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 25px; }
     border-color: #007bff;
     color: #007bff;
 }
-/* 2. 背景特效容器 (删除 pointer-events: none 才能互动！) */
-#particles-js {
+
+/* --- 粒子背景特效样式 --- */
+#bg-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0; /* 放在内容底下，但在 body 之上 */
-    background-color: #f5f7fa; /* 稍微亮一点的底色 */
+    z-index: -1; /* 关键：放在最底层，不会挡住按钮 */
+    pointer-events: none; /* 让鼠标点击穿透画布，不影响网页操作 */
 }
 
