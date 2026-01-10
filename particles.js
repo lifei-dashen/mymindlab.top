@@ -53,7 +53,7 @@
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            ctx.fillStyle = '#888888'; // 粒子颜色 (灰色)
+            ctx.fillStyle = '#dddddd'; // 粒子颜色 (灰色)
             ctx.fill();
         }
 
@@ -120,9 +120,9 @@
                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
                 
                 // 如果两个粒子距离小于 120px，画线
-                if (distance < (canvas.width/7) * (canvas.height/7)) {
+                if (distance < 20000) {
                     opacityValue = 1 - (distance / 20000);
-                    ctx.strokeStyle = 'rgba(140, 140, 140,' + opacityValue + ')'; // 线条颜色 (淡灰)
+                    ctx.strokeStyle = 'rgba(200, 200, 200,' + opacityValue + ')'; // 线条颜色 (淡灰)
                     ctx.lineWidth = 1;
                     ctx.beginPath();
                     ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -147,4 +147,5 @@
     // 启动
     init();
     animate();
+
 })();
