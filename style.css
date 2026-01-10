@@ -145,20 +145,34 @@ p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 25px; }
 .quiz-list { list-style: none; padding: 0; text-align: left; }
 .quiz-list li { margin-bottom: 15px; }
 
+/* --- 首页列表卡片样式 (绿色悬浮版) --- */
 .quiz-link {
     display: block;
     background: #fff;
-    padding: 15px; /* 稍微减小内边距，适应手机 */
+    padding: 15px;
     border-radius: 10px;
     text-decoration: none;
     color: #333;
-    border: 1px solid #eee; /* 加个细边框，层次更清晰 */
-    transition: transform 0.2s, box-shadow 0.2s;
+    
+    /* 默认边框是浅灰色的 */
+    border: 1px solid #eee; 
+    
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    
+    /* 🟢 修复遮挡的核心：开启定位 */
+    position: relative; 
+    z-index: 1; 
 }
+
 .quiz-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #007bff; /* 鼠标放上去边框变蓝 */
+    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.2); /* 🟢 阴影也带一点淡淡的绿色光晕 */
+    
+    /* 🟢 关键修改：鼠标放上去，边框变绿色！ */
+    border-color: #34C759; 
+    
+    /* 🟢 修复遮挡的核心：悬浮时层级极高，防止被粒子层切断 */
+    z-index: 1001; 
 }
 .quiz-link h3 { color: #007bff; margin-bottom: 5px; }
 .quiz-link p { margin: 0; font-size: 13px; color: #777; }
@@ -287,6 +301,7 @@ p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 25px; }
     z-index: -10; /* 关键：放在最底层，不会挡住按钮 */
     background-color: #ffffff; /* ✅ 必须是白色 */
 }
+
 
 
 
