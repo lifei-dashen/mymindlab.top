@@ -47,28 +47,28 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#a0a0a0" }, /* 粒子颜色：灰色 */
-                "shape": { "type": "circle" },   /* 形状：圆形 */
-                "opacity": { "value": 0.5, "random": false },
-                "size": { "value": 3, "random": true },
+                "color": { "value": "#333333" }, /* 🟢 改成深灰色，不再是看不见的浅灰 */
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.8, "random": false }, /* 🟢 提高不透明度 */
+                "size": { "value": 4, "random": true },
                 "line_linked": {
                     "enable": true,
                     "distance": 150,
-                    "color": "#a0a0a0",          /* 连线颜色：灰色 */
-                    "opacity": 0.4,
-                    "width": 1
+                    "color": "#333333",          /* 🟢 连线也改成深灰 */
+                    "opacity": 0.5,              /* 🟢 线条更明显 */
+                    "width": 1.5
                 },
                 "move": { "enable": true, "speed": 3, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
             },
             "interactivity": {
-                "detect_on": "canvas",
+                "detect_on": "window",           /* 🟢 扩大鼠标检测范围 */
                 "events": {
-                    "onhover": { "enable": true, "mode": "grab" }, /* 鼠标放上去会有连线吸附 */
-                    "onclick": { "enable": true, "mode": "push" },
+                    "onhover": { "enable": true, "mode": "grab" }, /* 鼠标放上去吸附 */
+                    "onclick": { "enable": true, "mode": "push" }, /* 点击散开 */
                     "resize": true
                 },
                 "modes": {
-                    "grab": { "distance": 140, "line_linked": { "opacity": 1 } }
+                    "grab": { "distance": 200, "line_linked": { "opacity": 1 } } /* 抓取范围变大 */
                 }
             },
             "retina_detect": true
@@ -76,5 +76,6 @@
     </script>
 </body>
 </html>
+
 
 
