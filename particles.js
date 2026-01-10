@@ -1,45 +1,45 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // 1. 创建 Canvas 元素
+  // 创建 Canvas 元素
   const canvas = document.createElement('canvas');
   canvas.id = 'bg-canvas';
   
-  // 2. 将 Canvas 添加到页面顶部
+  // 将 Canvas 添加到页面顶部
   document.body.prepend(canvas);
   
-  // 3. 获取 Canvas 上下文
+  // 获取 Canvas 上下文
   const ctx = canvas.getContext('2d');
   let particles = [];
   
-  // 4. 设置 Canvas 尺寸
+  // 设置 Canvas 尺寸
   function setCanvasSize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
   
-  // 5. 创建粒子类
+  // 粒子类
   class Particle {
     constructor() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 3 + 1;
-      this.speedX = Math.random() * 3 - 1.5;
-      this.speedY = Math.random() * 3 - 1.5;
-      this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1})`;
+      this.size = Math.random() * 1.5 + 0.5; // 更小的尺寸
+      this.speedX = Math.random() * 1 - 0.5; // 减慢速度
+      this.speedY = Math.random() * 1 - 0.5;
+      this.color = `rgba(0, 255, 0, ${Math.random() * 0.4 + 0.1})`; // 绿色且带透明度
     }
-    
+
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
-      
+
       // 边界检查
       if (this.x > canvas.width || this.x < 0) {
-        this.speedX = -this.speedX;
+        this.x = Math.random() * canvas.width;
       }
       if (this.y > canvas.height || this.y < 0) {
-        this.speedY = -this.speedY;
+        this.y = Math.random() * canvas.height;
       }
     }
-    
+
     draw() {
       ctx.fillStyle = this.color;
       ctx.beginPath();
@@ -47,36 +47,36 @@ document.addEventListener('DOMContentLoaded', function() {
       ctx.fill();
     }
   }
-  
-  // 6. 初始化粒子
+
+  // 初始化粒子
   function init() {
     particles = [];
-    const particleCount = Math.floor(canvas.width / 20);
+    const particleCount = Math.floor(canvas.width / 10); // 增加粒子数量
     
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
   }
-  
-  // 7. 动画函数
+
+  // 动画函数
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
     }
-    
+
     requestAnimationFrame(animate);
   }
-  
-  // 8. 事件监听
+
+  // 事件监听
   window.addEventListener('resize', function() {
     setCanvasSize();
     init();
   });
-  
-  // 9. 初始化
+
+  // 初始化
   setCanvasSize();
   init();
   animate();
