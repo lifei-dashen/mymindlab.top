@@ -1,8 +1,7 @@
-// particles.js
-// 独立背景特效脚本 - 不会影响答题逻辑
+// particles.js - 最终修正版 (修复了连线过密的问题)
 
 (function() {
-    // 1. 创建 Canvas 元素并插入到 body 最前面
+    // 1. 创建 Canvas
     const canvas = document.createElement('canvas');
     canvas.id = 'bg-canvas';
     document.body.prepend(canvas);
@@ -10,23 +9,16 @@
     const ctx = canvas.getContext('2d');
     let particlesArray;
 
-    // 设置 Canvas 尺寸
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // 处理窗口大小调整
     window.addEventListener('resize', function() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         init();
     });
 
-    // 鼠标交互位置
-    const mouse = {
-        x: null,
-        y: null,
-        radius: 150 // 鼠标互动半径
-    }
+    const mouse = { x: null, y: null, radius: 150 }
 
     window.addEventListener('mousemove', function(event) {
         mouse.x = event.x;
@@ -38,7 +30,7 @@
         mouse.y = undefined;
     });
 
-    // 2. 粒子类定义
+    // 2. 粒子类
     class Particle {
         constructor(x, y, directionX, directionY, size, color) {
             this.x = x;
@@ -49,69 +41,54 @@
             this.color = color;
         }
 
-        // 绘制粒子
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            ctx.fillStyle = '#dddddd'; // 粒子颜色 (灰色)
+            /* 👇 修改1：颜色改浅，变成银灰色 */
+            ctx.fillStyle = '#e0e0e0'; 
             ctx.fill();
         }
 
-        // 更新粒子位置
         update() {
-            // 边界反弹
-            if (this.x > canvas.width || this.x < 0) {
-                this.directionX = -this.directionX;
-            }
-            if (this.y > canvas.height || this.y < 0) {
-                this.directionY = -this.directionY;
-            }
+            if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+            if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
 
-            // 鼠标排斥/互动 (可选，不喜欢可以注释掉下面这块)
+            // 鼠标交互
             let dx = mouse.x - this.x;
             let dy = mouse.y - this.y;
             let distance = Math.sqrt(dx*dx + dy*dy);
             if (distance < mouse.radius + this.size) {
-                if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                    this.x += 1;
-                }
-                if (mouse.x > this.x && this.x > this.size * 10) {
-                    this.x -= 1;
-                }
-                if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                    this.y += 1;
-                }
-                if (mouse.y > this.y && this.y > this.size * 10) {
-                    this.y -= 1;
-                }
+                if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 1;
+                if (mouse.x > this.x && this.x > this.size * 10) this.x -= 1;
+                if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 1;
+                if (mouse.y > this.y && this.y > this.size * 10) this.y -= 1;
             }
-
-            // 移动
             this.x += this.directionX;
             this.y += this.directionY;
             this.draw();
         }
     }
 
-    // 3. 初始化粒子
+    // 3. 初始化
     function init() {
         particlesArray = [];
-        // 粒子数量计算：屏幕面积除以9000 (适配手机和电脑)
         let numberOfParticles = (canvas.height * canvas.width) / 9000;
         
         for (let i = 0; i < numberOfParticles; i++) {
-            let size = (Math.random() * 3) + 1; // 粒子大小 1-4
+            let size = (Math.random() * 3) + 1;
             let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
             let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-            let directionX = (Math.random() * 1) - 0.5; // 飘动速度 X
-            let directionY = (Math.random() * 1) - 0.5; // 飘动速度 Y
-            let color = '#888888';
+            let directionX = (Math.random() * 1) - 0.5;
+            let directionY = (Math.random() * 1) - 0.5;
+            
+            /* 👇 修改2：初始颜色也改浅 */
+            let color = '#e0e0e0';
 
             particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
         }
     }
 
-    // 4. 连线动画
+    // 4. 连线动画 (关键修复)
     function connect() {
         let opacityValue = 1;
         for (let a = 0; a < particlesArray.length; a++) {
@@ -119,10 +96,12 @@
                 let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
                 
-                // 如果两个粒子距离小于 120px，画线
-                if (distance < 20000) {
+                /* 👇👇👇 核心修复：把那个屏幕公式改成固定值 20000 👇👇👇 */
+                /* 这样就不会出现满屏乱连的蜘蛛网了 */
+                if (distance < 20000) { 
                     opacityValue = 1 - (distance / 20000);
-                    ctx.strokeStyle = 'rgba(200, 200, 200,' + opacityValue + ')'; // 线条颜色 (淡灰)
+                    /* 👇 修改3：连线颜色改极淡 */
+                    ctx.strokeStyle = 'rgba(210, 210, 210,' + opacityValue + ')'; 
                     ctx.lineWidth = 1;
                     ctx.beginPath();
                     ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -133,7 +112,6 @@
         }
     }
 
-    // 5. 动画循环
     function animate() {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
@@ -144,8 +122,6 @@
         connect();
     }
 
-    // 启动
     init();
     animate();
-
 })();
