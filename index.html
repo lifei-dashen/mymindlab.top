@@ -5,70 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="site_title">Mind Lab</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* 1. 强制卡片基础样式 */
-        .quiz-link {
-            position: relative !important; /* 开启定位，否则z-index无效 */
-            z-index: 1 !important;         /* 默认层级 */
-            border: 1px solid #eee !important;
-            transition: all 0.2s ease-in-out !important;
-            /* 解决部分浏览器渲染切边问题 */
-            transform-style: preserve-3d; 
-            backface-visibility: hidden;
-        }
-
-        /* 2. 鼠标悬停样式 (绿色边框 + 强制置顶) */
-        .quiz-link:hover {
-            /* 🟢 边框变绿 */
-            border-color: #34C759 !important; 
-            
-            /* 🟢 稍微上浮 */
-            transform: translateY(-3px) scale(1.01) !important; 
-            
-            /* 🟢 绿色光晕阴影 */
-            box-shadow: 0 8px 20px rgba(52, 199, 89, 0.25) !important;
-            
-            /* 🟢 核心修复：层级设为超级高！ */
-            /* 这会让它瞬间浮到所有邻居卡片、甚至粒子层的上面，绝不会被切断 */
-            z-index: 99999 !important; 
-            
-            /* 额外保险：背景设为纯白，防止变透明 */
-            background-color: #fff !important;
-        }
-
-        /* 3. 确保列表容器允许卡片溢出 (防止被父容器切边) */
-        .main-container, .quiz-list, .quiz-list li {
-            overflow: visible !important;
-            z-index: auto; /* 防止父级锁死层级 */
-        }
-    </style>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2334C759'/%3E%3Cpath d='M20 50 L35 50 L45 30 L55 70 L65 50 L80 50' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2334C759'/%3E%3Cpath d='M20 50 L35 50 L45 30 L55 70 L65 50 L80 50' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     <script src="lang.js"></script> 
-    
-    <style>
-        /* 1. 确保网页背景纯白 */
-        body { background-color: #ffffff !important; }
-
-        /* 2. 粒子容器：悬浮模式 */
-        #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* 🔴 关键：z-index 设为 999，保证浮在白色卡片上面！ */
-            z-index: -1; 
-            /* 🔴 关键：鼠标穿透！让你的点击可以直接穿过粒子点到按钮 */
-            pointer-events: none; 
-            background: transparent !important;
-        }
-    </style>
 </head>
 <body>
     <header class="site-header">
         <a href="index.html" class="site-logo">
             <span class="logo-text" data-i18n="site_title">Mind Lab</span>
         </a>
+
         <nav class="site-nav">
             <select id="lang-selector" onchange="changeLanguage(this.value)"></select>
         </nav>
@@ -77,12 +22,15 @@
     <div class="main-container">
         <h1 data-i18n="list_title">Hot Quizzes</h1>
         <p data-i18n="footer_slogan">Explore your unknown self</p>
-        <ul class="quiz-list" id="quiz-list-container"></ul>
+        
+        <ul class="quiz-list" id="quiz-list-container">
+            </ul>
     </div>
 
     <footer class="site-footer">
         <p class="copyright">© 2026 <strong data-i18n="site_title">Mind Lab</strong>. <span data-i18n="rights_reserved">All Rights Reserved</span></p>
         <p class="slogan" data-i18n="footer_slogan">Explore your unknown self</p>
+
         <div class="footer-links">
             <a href="javascript:void(0);" id="link-privacy" data-i18n="privacy">Privacy Policy</a>
             <a href="javascript:void(0);" id="link-terms" data-i18n="terms">Disclaimer</a>
@@ -90,50 +38,8 @@
         </div>
     </footer>
 
-    <div id="particles-js"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-    <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 25, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#4cd964" }, /* 🟢 苹果绿 */
-                "shape": { "type": "circle" },
-                "opacity": {
-                    "value": 0.6,
-                    "random": true,
-                    "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.3, "sync": false }
-                },
-                "size": { "value": 8, "random": true },
-                "line_linked": { "enable": false }, /* ❌ 坚决不要连线 */
-                "move": {
-                    "enable": true,
-                    "speed": 1,
-                    "direction": "top", /* 向上飘 */
-                    "random": true,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false
-                }
-            },
-            "interactivity": {
-                "detect_on": "window",
-                "events": {
-                    "onhover": { "enable": true, "mode": "bubble" },
-                    "onclick": { "enable": false },
-                    "resize": true
-                },
-                "modes": {
-                    "bubble": { "distance": 200, "size": 12, "duration": 2, "opacity": 0.8 }
-                }
-            },
-            "retina_detect": true
-        });
-    </script>
-
-    <script src="script.js"></script>
+<script src="particles.js"></script>
+<script src="lang.js"></script>
+<script src="script.js"></script>"particles.js"></script>
 </body>
 </html>
-
-
