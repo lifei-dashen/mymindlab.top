@@ -9,7 +9,6 @@
     <script src="lang.js"></script> 
 </head>
 <body>
-    <div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
     <header class="site-header">
         <a href="index.html" class="site-logo">
             <span class="logo-text" data-i18n="site_title">Mind Lab</span>
@@ -39,45 +38,10 @@
         </div>
     </footer>
 
-<script src="particles.js"></script>
-
-    <script src="script.js"></script>
-
-    <script>
-        // 强制初始化背景 (图二同款：圆形粒子 + 连线)
-        if (typeof particlesJS !== 'undefined') {
-            particlesJS("particles-js", {
-                "particles": {
-                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                    "color": { "value": "#cccccc" }, /* 浅灰色粒子 */
-                    "shape": { "type": "circle" },   /* ❗重点：必须是 circle，不能是 polygon */
-                    "opacity": { "value": 0.5, "random": false },
-                    "size": { "value": 3, "random": true },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#cccccc",          /* 浅灰色连线 */
-                        "opacity": 0.4,
-                        "width": 1
-                    },
-                    "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": { "enable": true, "mode": "grab" },
-                        "onclick": { "enable": true, "mode": "push" },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": { "distance": 140, "line_linked": { "opacity": 1 } }
-                    }
-                },
-                "retina_detect": true
-            });
-        }
-    </script>
+<script src="script.js"></script>
+    <script src="particles.js"></script>
 </body>
 </html>
+
 
 
