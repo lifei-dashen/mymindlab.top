@@ -17,8 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
   const ctx = canvas.getContext('2d');
   let particles = [];
   let animationFrameId;
+  let mouseX = 0;
+  let mouseY = 0;
+  const mouseRadius = 150; // 鼠标影响范围
   
-  // 4. 设置 Canvas 尺寸（考虑高清屏幕）
+  // 4. 跟踪鼠标位置
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+  
+  // 5. 设置 Canvas 尺寸（考虑高清屏幕）
   function setCanvasSize() {
     const dpr = window.devicePixelRatio || 1;
     canvas.width = window.innerWidth * dpr;
@@ -28,21 +37,23 @@ document.addEventListener('DOMContentLoaded', function() {
     ctx.scale(dpr, dpr);
   }
   
-  // 5. 创建粒子类
+  // 6. 创建粒子类
   class Particle {
     constructor() {
       this.reset();
+      this.baseSize = Math.random() * 1.5 + 1.0; // 基础大小 (1.0-2.5px)
+      this.maxSize = this.baseSize * 2.5; // 鼠标靠近时的最大大小
     }
     
     reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 1.2 + 0.5; // 适中大小 (0.5-1.7px)
-      this.speedX = (Math.random() - 0.5) * 0.8; // 慢速移动
-      this.speedY = (Math.random() - 0.5) * 0.8;
-      this.opacity = Math.random() * 0.5 + 0.3; // 30%-80% 不透明度
-      this.hue = 140 + Math.random() * 40; // 绿色色调范围 (140-180)
-      this.lightness = 60 + Math.random() * 20; // 亮度 (60%-80%)
+      this.x = Math.random() * window.innerWidth;
+      this.y = Math.random() * window.innerHeight;
+      this.speedX = (Math.random() - 0.5) * 1.2; // 速度适中
+      this.speedY = (Math.random() - 0.5) * 1.2;
+      this.opacity = Math.random() * 0.6 + 0.3; // 30%-90% 不透明度
+      this.hue = 130 + Math.random() * 30; // 绿色色调范围 (130-160)
+      this.lightness = 50 + Math.random() * 20; // 亮度 (50%-70%)
+      this.size = this.baseSize;
     }
     
     update() {
@@ -50,32 +61,61 @@ document.addEventListener('DOMContentLoaded', function() {
       this.y += this.speedY;
       
       // 边界检查 - 从边缘重新进入
-      if (this.x > canvas.width) this.x = 0;
-      if (this.x < 0) this.x = canvas.width;
-      if (this.y > canvas.height) this.y = 0;
-      if (this.y < 0) this.y = canvas.height;
+      if (this.x > window.innerWidth) this.x = 0;
+      if (this.x < 0) this.x = window.innerWidth;
+      if (this.y > window.innerHeight) this.y = 0;
+      if (this.y < 0) this.y = window.innerHeight;
+      
+      // 计算与鼠标的距离
+      const dx = mouseX - this.x;
+      const dy = mouseY - this.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      // 根据与鼠标的距离调整大小（更平滑的过渡）
+      if (distance < mouseRadius) {
+        const proximity = 1 - (distance / mouseRadius);
+        this.size = this.baseSize + (this.maxSize - this.baseSize) * proximity * 0.8;
+      } else {
+        // 平滑地恢复到基础大小
+        if (this.size > this.baseSize) {
+          this.size -= (this.size - this.baseSize) * 0.05;
+        }
+      }
     }
     
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${this.hue}, 70%, ${this.lightness}%, ${this.opacity})`;
+      ctx.fillStyle = `hsla(${this.hue}, 80%, ${this.lightness}%, ${this.opacity})`;
+      ctx.fill();
+      
+      // 添加发光效果
+      const glow = ctx.createRadialGradient(
+        this.x, this.y, 0,
+        this.x, this.y, this.size * 2
+      );
+      glow.addColorStop(0, `hsla(${this.hue}, 80%, 70%, ${this.opacity * 0.8})`);
+      glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
       ctx.fill();
     }
   }
   
-  // 6. 初始化粒子
+  // 7. 初始化粒子
   function init() {
     particles = [];
-    // 根据屏幕大小计算粒子数量 (适当密度)
-    const particleCount = Math.floor((window.innerWidth * window.innerHeight) / 8000);
+    // 根据屏幕大小计算粒子数量 (高密度但不拥挤)
+    const particleCount = Math.floor((window.innerWidth * window.innerHeight) / 6000);
     
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
   }
   
-  // 7. 动画函数
+  // 8. 动画函数
   function animate() {
     // 设置白色背景
     ctx.fillStyle = 'rgba(255, 255, 255, 1)';
@@ -90,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     animationFrameId = requestAnimationFrame(animate);
   }
   
-  // 8. 事件监听
+  // 9. 事件监听
   window.addEventListener('resize', function() {
     cancelAnimationFrame(animationFrameId);
     setCanvasSize();
@@ -98,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     animate();
   });
   
-  // 9. 初始化
+  // 10. 初始化
   setCanvasSize();
   init();
   animate();
