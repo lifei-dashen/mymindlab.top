@@ -38,15 +38,34 @@
         </div>
     </footer>
 
-<div id="particles-js"></div>
+<style>
+        /* 页面背景保持纯白 */
+        body {
+            background-color: #ffffff !important;
+        }
+
+        /* 粒子画布：关键修改 */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99; /* 🟢 关键：放在内容之上！ */
+            pointer-events: none; /* 🟢 关键：鼠标可以穿透它去点按钮，不会挡操作 */
+            background: transparent !important; /* 画布本身透明，只显示点 */
+        }
+    </style>
+
+    <div id="particles-js"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     <script>
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#66cc99" }, /* 🟢 苹果绿 */
+                "number": { "value": 30, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#4cd964" }, /* 🟢 iOS 经典的系统绿 */
                 "shape": { "type": "circle" },
                 "opacity": {
                     "value": 0.6,
@@ -54,14 +73,14 @@
                     "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.3, "sync": false }
                 },
                 "size": {
-                    "value": 5,
+                    "value": 6, /* 稍微大一点点，更有质感 */
                     "random": true
                 },
-                "line_linked": { "enable": false }, /* ❌ 关掉连线，只要点 */
+                "line_linked": { "enable": false }, /* ❌ 坚决不要连线 */
                 "move": {
                     "enable": true,
-                    "speed": 1.5,
-                    "direction": "none",
+                    "speed": 1, /* 极慢速漂浮，才显得优雅 */
+                    "direction": "top", /* 微微向上飘，像气泡 */
                     "random": true,
                     "straight": false,
                     "out_mode": "out",
@@ -69,14 +88,14 @@
                 }
             },
             "interactivity": {
-                "detect_on": "canvas",
+                "detect_on": "window",
                 "events": {
-                    "onhover": { "enable": true, "mode": "bubble" }, /* 鼠标放上去变大 */
+                    "onhover": { "enable": true, "mode": "bubble" },
                     "onclick": { "enable": false },
                     "resize": true
                 },
                 "modes": {
-                    "bubble": { "distance": 150, "size": 8, "duration": 2, "opacity": 0.8 }
+                    "bubble": { "distance": 200, "size": 10, "duration": 2, "opacity": 0.8 }
                 }
             },
             "retina_detect": true
@@ -87,6 +106,7 @@
 </body>
 
 </html>
+
 
 
 
