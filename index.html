@@ -5,6 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="site_title">Mind Lab</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 1. 强制卡片基础样式 */
+        .quiz-link {
+            position: relative !important; /* 开启定位，否则z-index无效 */
+            z-index: 1 !important;         /* 默认层级 */
+            border: 1px solid #eee !important;
+            transition: all 0.2s ease-in-out !important;
+            /* 解决部分浏览器渲染切边问题 */
+            transform-style: preserve-3d; 
+            backface-visibility: hidden;
+        }
+
+        /* 2. 鼠标悬停样式 (绿色边框 + 强制置顶) */
+        .quiz-link:hover {
+            /* 🟢 边框变绿 */
+            border-color: #34C759 !important; 
+            
+            /* 🟢 稍微上浮 */
+            transform: translateY(-3px) scale(1.01) !important; 
+            
+            /* 🟢 绿色光晕阴影 */
+            box-shadow: 0 8px 20px rgba(52, 199, 89, 0.25) !important;
+            
+            /* 🟢 核心修复：层级设为超级高！ */
+            /* 这会让它瞬间浮到所有邻居卡片、甚至粒子层的上面，绝不会被切断 */
+            z-index: 99999 !important; 
+            
+            /* 额外保险：背景设为纯白，防止变透明 */
+            background-color: #fff !important;
+        }
+
+        /* 3. 确保列表容器允许卡片溢出 (防止被父容器切边) */
+        .main-container, .quiz-list, .quiz-list li {
+            overflow: visible !important;
+            z-index: auto; /* 防止父级锁死层级 */
+        }
+    </style>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2334C759'/%3E%3Cpath d='M20 50 L35 50 L45 30 L55 70 L65 50 L80 50' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     <script src="lang.js"></script> 
     
@@ -98,4 +135,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 
