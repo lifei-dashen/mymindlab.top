@@ -64,18 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 动画函数
-  function animate() {
-    // 使用半透明黑色创建淡入淡出效果
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].draw();
-    }
-    
-    requestAnimationFrame(animate);
-  }
+function animate() {
+  // 设置为纯白色背景
+  ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // 注释掉粒子绘制代码，不显示任何粒子
+  // for (let i = 0; i < particles.length; i++) {
+  //   particles[i].update();
+  //   particles[i].draw();
+  // }
+  
+  requestAnimationFrame(animate);
+}
   
   // 事件监听
   window.addEventListener('resize', function() {
@@ -88,3 +89,4 @@ document.addEventListener('DOMContentLoaded', function() {
   init();
   animate();
 });
+
