@@ -69,13 +69,39 @@ function animate() {
   ctx.fillStyle = 'rgba(255, 255, 255, 1)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  // 注释掉粒子绘制代码，不显示任何粒子
-  // for (let i = 0; i < particles.length; i++) {
-  //   particles[i].update();
-  //   particles[i].draw();
-  // }
+  for (let i = 0; i < particles.length; i++) {
+    particles[i].update(); // 更新粒子位置
+    particles[i].draw(ctx); // 绘制粒子
+    
+    // 如果粒子超出屏幕，则从另一侧进入，创建循环效果
+    if (particles[i].x > canvas.width) particles[i].x = 0;
+    if (particles[i].x < 0) particles[i].x = canvas.width;
+    if (particles[i].y > canvas.height) particles[i].y = 0;
+    if (particles[i].y < 0) particles[i].y = canvas.height;
+  }
   
   requestAnimationFrame(animate);
+}
+
+// 粒子构造函数
+function Particle(x, y) {
+  this.x = x;
+  this.y = y;
+  this.vx = Math.random() * 2 - 1; // 随机水平速度
+  this.vy = Math.random() * 2 - 1; // 随机垂直速度
+  
+  this.update = function() {
+    this.x += this.vx;
+    this.y += this.vy;
+  };
+  
+  this.draw = function(ctx) {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 5, 0, Math.PI * 2, false); // 圆形粒子
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.7)'; // 绿色透明粒子
+    ctx.fill();
+    ctx.closePath();
+  };
 }
   
   // 事件监听
@@ -89,4 +115,5 @@ function animate() {
   init();
   animate();
 });
+
 
